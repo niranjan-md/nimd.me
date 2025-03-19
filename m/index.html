@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Niranjan MD</title>
+  <style>
+    :root {
+      --bg-color: #f5f5f5;
+      --text-color: #333;
+      --card-bg: #fff;
+      --accent-color: #4a6cfa;
+      --shadow: 0 4px 6px rgba(0,0,0,0.1);
+      --transition: all 0.3s ease;
+    }
+
+    [data-theme="dark"] {
+      --bg-color: #121212;
+      --text-color: #e0e0e0;
+      --card-bg: #1e1e1e;
+      --accent-color: #627eff;
+      --shadow: 0 4px 6px rgba(0,0,0,0.3);
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    body {
+      background-color: var(--bg-color);
+      color: var(--text-color);
+      transition: var(--transition);
+      overflow-x: hidden;
+    }
+
+    .container {
+      max-width: 600px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 30px;
+    }
+
+    .header-text {
+      transform: translateY(-50px);
+      opacity: 0;
+      animation: slideDown 0.8s forwards;
+    }
+
+    .toggle-container {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+    }
+
+    .toggle-desktop {
+      font-size: 0.75rem;
+      text-decoration: none;
+      color: var(--accent-color);
+      background: none;
+      border: 1px solid var(--accent-color);
+      padding: 5px 10px;
+      border-radius: 20px;
+      cursor: pointer;
+      transition: var(--transition);
+    }
+
+    .toggle-desktop:hover {
+      background-color: var(--accent-color);
+      color: white;
+    }
+
+    .theme-toggle {
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 5px;
+      font-size: 1.5rem;
+      color: var(--text-color);
+      transition: var(--transition);
+    }
+
+    h1 {
+      font-size: 2rem;
+      margin-bottom: 5px;
+    }
+
+    .subtitle {
+      color: var(--accent-color);
+      font-weight: 500;
+    }
+
+    .profile {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      margin-bottom: 30px;
+      transform: translateX(-100px);
+      opacity: 0;
+      animation: slideRight 0.8s forwards 0.2s;
+    }
+
+    .profile-img {
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+      object-fit: cover;
+      box-shadow: var(--shadow);
+    }
+
+    .bio {
+      line-height: 1.5;
+      margin-bottom: 40px;
+      transform: translateX(100px);
+      opacity: 0;
+      animation: slideLeft 0.8s forwards 0.4s;
+    }
+
+    .section-title {
+      margin-bottom: 20px;
+      font-size: 1.5rem;
+      position: relative;
+    }
+
+    .section-title::after {
+      content: '';
+      position: absolute;
+      bottom: -5px;
+      left: 0;
+      width: 50px;
+      height: 3px;
+      background-color: var(--accent-color);
+    }
+
+    .projects {
+      margin-bottom: 40px;
+    }
+
+    .project-card {
+      background-color: var(--card-bg);
+      border-radius: 10px;
+      padding: 20px;
+      margin-bottom: 20px;
+      box-shadow: var(--shadow);
+      transform: translateY(30px);
+      opacity: 0;
+      animation: slideUp 0.6s forwards calc(0.6s + var(--delay) * 0.15s);
+      transition: var(--transition);
+    }
+
+    .project-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 20px rgba(0,0,0,0.15);
+    }
+
+    .project-title {
+      font-size: 1.2rem;
+      margin-bottom: 10px;
+      color: var(--accent-color);
+    }
+
+    .project-desc {
+      font-size: 0.9rem;
+      line-height: 1.4;
+      margin-bottom: 15px;
+    }
+
+    .project-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 5px;
+      margin-bottom: 15px;
+    }
+
+    .tag {
+      background-color: rgba(74, 108, 250, 0.1);
+      color: var(--accent-color);
+      padding: 3px 8px;
+      border-radius: 12px;
+      font-size: 0.7rem;
+    }
+
+    .project-link {
+      display: inline-block;
+      text-decoration: none;
+      color: var(--accent-color);
+      font-size: 0.9rem;
+      font-weight: 500;
+    }
+
+    .socials {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      margin-bottom: 30px;
+    }
+
+    .social-icon {
+      width: 40px;
+      height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 50%;
+      background-color: var(--card-bg);
+      box-shadow: var(--shadow);
+      color: var(--accent-color);
+      text-decoration: none;
+      font-size: 1.2rem;
+      transition: var(--transition);
+      transform: scale(0);
+      animation: scaleIn 0.5s forwards calc(1s + var(--delay) * 0.1s);
+    }
+
+    .social-icon:hover {
+      transform: translateY(-5px) scale(1.1);
+      background-color: var(--accent-color);
+      color: white;
+    }
+
+    footer {
+      text-align: center;
+      margin-top: 40px;
+      padding-top: 20px;
+      border-top: 1px solid rgba(0,0,0,0.1);
+      font-size: 0.8rem;
+      opacity: 0;
+      animation: fadeIn 1s forwards 1.5s;
+    }
+
+    @keyframes slideDown {
+      to {
+        transform: translateY(0);
+        opacity: 1;
+      }
+    }
+
+    @keyframes slideRight {
+      to {
+        transform: translateX(0);
+        opacity: 1;
+      }
+    }
+
+    @keyframes slideLeft {
+      to {
+        transform: translateX(0);
+        opacity: 1;
+      }
+    }
+
+    @keyframes slideUp {
+      to {
+        transform: translateY(0);
+        opacity: 1;
+      }
+    }
+
+    @keyframes scaleIn {
+      to {
+        transform: scale(1);
+      }
+    }
+
+    @keyframes fadeIn {
+      to {
+        opacity: 1;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <div class="header-text">
+        <h1>Niranjan MD</h1>
+        <p class="subtitle">Web Developer & More</p>
+      </div>
+      <div class="toggle-container">
+        <a href="https://nimd.me" class="toggle-desktop" onclick="switchToDesktop()">Desktop Site</a>
+        <button class="theme-toggle" id="themeToggle">🌙</button>
+      </div>
+    </header>
+
+    <div class="profile">
+      <!--<img src="/api/placeholder/80/80" alt="Profile" class="profile-img">-->
+      <p>Hi. I am a passionate web dev whom you can find in a mess of Cat-6 cables during free time.</p>
+    </div>
+<!--
+    <div class="bio">
+      <p>I specialize in front-end development and UI/UX design with 5+ years of experience building responsive, accessible websites and applications. Currently based in New York City.</p>
+    </div> -->
+
+    <section class="projects">
+      <h2 class="section-title">Projects</h2>
+      
+      <div class="project-card" style="--delay: 0">
+        <h3 class="project-title">PeppSpace</h3>
+        <p class="project-desc">A collection of little, fun creative webpages. A place to have fun.</p>
+        <div class="project-tags">
+          <span class="tag">HTML</span>
+          <span class="tag">CSS</span>
+          <span class="tag">JavaScript</span>
+        </div>
+        <a href="https://pepp.space/fun" class="project-link">View Project →</a>
+      </div>
+
+      <div class="project-card" style="--delay: 1">
+        <h3 class="project-title">URL Shortener</h3>
+        <p class="project-desc">A Robust and functional URL Shortening and Lookup frontend using is.gd and v.gd API.</p>
+        <div class="project-tags">
+          <span class="tag">HTML</span>
+          <span class="tag">CSS</span>
+          <span class="tag">JavaScript</span>
+          <span class="tag">API</span>
+        </div>
+        <a href="https://tiny.nimd.me" class="project-link">View Project →</a>
+      </div>
+
+      <div class="project-card" style="--delay: 2">
+        <h3 class="project-title">End Poem Website</h3>
+        <p class="project-desc">A beautiful and immersive wrapper to display End Poem by Julian Gough.</p>
+        <div class="project-tags">
+          <span class="tag">HTML</span>
+          <span class="tag">CSS</span>
+          <span class="tag">JavaScript</span>
+        </div>
+        <a href="https://end.nimd.me" class="project-link">View Project →</a>
+      </div>
+    </section>
+
+    <h2 class="section-title">Connect</h2>
+    <div class="socials">
+      <a href="https://go.nimd.me/mail" class="social-icon" style="--delay: 0">
+        <span><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-mail"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg></span>
+      </a>
+      <a href="https://go.nimd.me/signal" class="social-icon" style="--delay: 1">
+        <span> <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-message-circle-dashed"><path d="M13.5 3.1c-.5 0-1-.1-1.5-.1s-1 .1-1.5.1"/><path d="M19.3 6.8a10.45 10.45 0 0 0-2.1-2.1"/><path d="M20.9 13.5c.1-.5.1-1 .1-1.5s-.1-1-.1-1.5"/><path d="M17.2 19.3a10.45 10.45 0 0 0 2.1-2.1"/><path d="M10.5 20.9c.5.1 1 .1 1.5.1s1-.1 1.5-.1"/><path d="M3.5 17.5 2 22l4.5-1.5"/><path d="M3.1 10.5c0 .5-.1 1-.1 1.5s.1 1 .1 1.5"/><path d="M6.8 4.7a10.45 10.45 0 0 0-2.1 2.1"/></svg></span>
+      </a>
+      <a href="https://go.nimd.me/github" class="social-icon" style="--delay: 2">
+        <span><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg></span>
+      </a>
+      <a href="https://go.nimd.me/linkedin" class="social-icon" style="--delay: 3">
+        <span><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-linkedin"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect width="4" height="12" x="2" y="9"/><circle cx="4" cy="4" r="2"/></svg></span>
+      </a>
+    </div>
+
+    <footer>
+      <p>Crafted with <span>❤️</span> and code</p></p>
+    </footer>
+  </div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const themeToggle = document.getElementById('themeToggle');
+      const desktopLink = document.getElementById('desktopLink');
+      let isDark = false;
+
+      // Check for saved theme preference or use preferred color scheme
+      const savedTheme = localStorage.getItem('theme');
+      if (savedTheme === 'dark' || (!savedTheme && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+        document.body.setAttribute('data-theme', 'dark');
+        themeToggle.textContent = '☀️';
+        isDark = true;
+      }
+
+      // Theme toggle functionality
+      themeToggle.addEventListener('click', () => {
+        isDark = !isDark;
+        if (isDark) {
+          document.body.setAttribute('data-theme', 'dark');
+          themeToggle.textContent = '☀️';
+          localStorage.setItem('theme', 'dark');
+        } else {
+          document.body.removeAttribute('data-theme');
+          themeToggle.textContent = '🌙';
+          localStorage.setItem('theme', 'light');
+        }
+      });
+		 
+		function switchToDesktop() {
+    document.cookie = "forceDesktop=true; path=/; max-age=86400"; // Store cookie for 1 day
+    window.location.href = "https://nimd.me";
+}
+
+      // Add scroll animation to project cards
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.style.animation = `slideUp 0.6s forwards`;
+            observer.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.1 });
+
+      document.querySelectorAll('.project-card').forEach(card => {
+        observer.observe(card);
+      });
+    });
+  </script>
+</body>
+</html>
