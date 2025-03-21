@@ -1,0 +1,33 @@
+# Allow all search engines to index the site
+User-agent: *
+Disallow: /portfolio/
+Disallow: /m/
+Allow: /
+
+# Block known bad bots that scrape or overload servers
+User-agent: AhrefsBot
+Disallow: /
+
+User-agent: SemrushBot
+Disallow: /
+
+User-agent: BaiduSpider
+Disallow: /
+
+User-agent: YandexBot
+Disallow: /
+
+User-agent: MJ12bot
+Disallow: /
+
+User-agent: DotBot
+Disallow: /
+
+User-agent: PetalBot
+Disallow: /
+
+# Prevent bots from crawling URL query parameters (e.g., ?ref=, ?utm_source=)
+Disallow: /*?*
+
+# Recommended crawl delay for non-Google bots (optional, but can prevent overload)
+Crawl-delay: 10
