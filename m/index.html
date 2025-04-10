@@ -277,17 +277,23 @@
     }
   </style>
 	<!-- Device check-->
-<script>
-  (function() {
-    const urlParams = new URLSearchParams(window.location.search);
-    if (urlParams.has('redirected')) return;
-    
-    if (!/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
-      window.location.href = 'https://nimd.me?redirected=true';
-    }
-  })();
-</script>
-	
+	<script>
+	  (function() {
+	    // Check if user has requested desktop version
+	    const urlParams = new URLSearchParams(window.location.search);
+	    
+	    // If user explicitly requested mobile view, don't redirect
+	    if (urlParams.has('view') && urlParams.get('view') === 'mobile') {
+	      return;
+	    }
+	    
+	    // If this is a desktop device (and not explicitly requesting mobile view)
+	    if (!/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
+	      window.location.href = 'https://nimd.me?from=mobile';
+	    }
+	  })();
+	</script>
+		
 </head>
 <body>
   <div class="container">
@@ -297,7 +303,7 @@
         <p class="subtitle">Web Developer & More</p>
       </div>
       <div class="toggle-container">
-        <a href="https://nimd.me" class="toggle-desktop" onclick="switchToDesktop()">Desktop Site</a>
+        <a href="https://nimd.me?view=desktop" class="toggle-desktop">Desktop Site</a>
         <button class="theme-toggle" id="themeToggle">🌙</button>
       </div>
     </header>
