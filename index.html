@@ -50,10 +50,18 @@
     <script>
       (function() {
         const urlParams = new URLSearchParams(window.location.search);
-        if (urlParams.has('redirected')) return;
-    
+        if (urlParams.has('view') && urlParams.get('view') === 'desktop') {
+          // store in localStorage
+          localStorage.setItem('sitePreference', 'desktop');
+          return;
+        }
+        
+        if (localStorage.getItem('sitePreference') === 'desktop') {
+          return;
+        }
+        
         if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
-          window.location.href = 'https://nimd.me/m?redirected=true';
+          window.location.href = 'https://nimd.me/m';
         }
       })();
     </script>
