@@ -49,19 +49,17 @@
     <!-- Device detection and redirect -->
     <script>
       (function() {
+        // Check if user has requested desktop version
         const urlParams = new URLSearchParams(window.location.search);
+        
+        // If user explicitly requested desktop view, don't redirect
         if (urlParams.has('view') && urlParams.get('view') === 'desktop') {
-          // store in localStorage
-          localStorage.setItem('sitePreference', 'desktop');
           return;
         }
         
-        if (localStorage.getItem('sitePreference') === 'desktop') {
-          return;
-        }
-        
+        // Otherwise perform mobile detection and redirect
         if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
-          window.location.href = 'https://nimd.me/m';
+          window.location.href = 'https://nimd.me/m?from=main';
         }
       })();
     </script>
